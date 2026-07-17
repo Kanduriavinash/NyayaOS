@@ -1,0 +1,21 @@
+{
+  "name": "nyayaos-monorepo",
+  "private": true,
+  "version": "1.0.0",
+  "packageManager": "pnpm@10.27.0",
+  "description": "NyayaOS – The Agentic Operating System for the Justice Ecosystem",
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,js,json,md}\"",
+    "db:generate": "turbo run db:generate",
+    "db:migrate": "turbo run db:migrate",
+    "db:seed": "turbo run db:seed"
+  },
+  "devDependencies": {
+    "prettier": "^3.2.5",
+    "turbo": "^2.0.4",
+    "typescript": "^5.4.5"
+  }
+}

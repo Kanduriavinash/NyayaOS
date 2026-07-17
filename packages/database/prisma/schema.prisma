@@ -1,0 +1,132 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            String         @id @default(uuid())
+  name          String
+  email         String         @unique
+  role          String         @default("CITIZEN") // CITIZEN, LAWYER, JUDGE, REGISTRY_OFFICER, ADMIN
+  phone         String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  
+  // Relations
+  citizenCases  Case[]         @relation("CitizenCases")
+  lawyerCases   Case[]         @relation("LawyerCases")
+  judgeCases    Case[]         @relation("JudgeCases")
+  hearings      Hearing[]
+  orders        Order[]
+  notifications Notification[]
+  auditLogs     AuditLog[]
+}
+
+model Court {
+  id           String    @id @default(uuid())
+  name         String
+  location     String
+  jurisdiction String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  cases        Case[]    @relation("CourtCases")
+}
+
+model Case {
+  id            String        @id @default(uuid())
+  title         String
+  description   String
+  status        String        @default("PENDING_INTAKE") // PENDING_INTAKE, VERIFYING_IDENTITY, VERIFYING_DOCS, PENDING_PETITION, PETITION_GENERATED, PENDING_REGISTRY, APPROVED, SCHEDULED, IN_HEARING, DISPOSED, REJECTED
+  category      String        // PROPERTY_DISPUTE, CONSUMER_CASE, FAMILY_CASE, CRIMINAL_SUPPORT, MEDIATION
+  
+  // Foreign Keys
+  citizenId     String
+  lawyerId      String?
+  judgeId       String?
+  courtId       String?
+  
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  // Relations
+  citizen       User          @relation("CitizenCases", fields: [citizenId], references: [id])
+  lawyer        User?         @relation("LawyerCases", fields: [lawyerId], references: [id])
+  judge         User?         @relation("JudgeCases", fields: [judgeId], references: [id])
+  court         Court?        @relation("CourtCases", fields: [courtId], references: [id])
+  
+  documents     Document[]
+  hearings      Hearing[]
+  orders        Order[]
+}
+
+model Document {
+  id           String     @id @default(uuid())
+  name         String
+  type         String     // ID_PROOF, PROPERTY_DEED, PETITION, EVIDENCE, OTHER
+  status       String     @default("PENDING") // PENDING, VALID, INVALID
+  url          String?
+  content      String?    // text content or description
+  caseId       String
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  // Relations
+  case         Case       @relation(fields: [caseId], references: [id])
+}
+
+model Hearing {
+  id        String        @id @default(uuid())
+  caseId    String
+  date      DateTime
+  room      String
+  status    String        @default("SCHEDULED") // SCHEDULED, COMPLETED, POSTPONED
+  judgeId   String?
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  // Relations
+  case      Case          @relation(fields: [caseId], references: [id])
+  judge     User?         @relation(fields: [judgeId], references: [id])
+}
+
+model Order {
+  id        String   @id @default(uuid())
+  caseId    String
+  title     String
+  content   String
+  judgeId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  case      Case     @relation(fields: [caseId], references: [id])
+  judge     User     @relation(fields: [judgeId], references: [id])
+}
+
+model Notification {
+  id        String             @id @default(uuid())
+  userId    String
+  title     String
+  content   String
+  type      String             // EMAIL, SMS, PUSH
+  status    String             @default("PENDING") // PENDING, SENT, FAILED
+  createdAt DateTime           @default(now())
+
+  // Relations
+  user      User               @relation(fields: [userId], references: [id])
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  action    String
+  details   String
+  userId    String?
+  createdAt DateTime @default(now())
+
+  // Relations
+  user      User?    @relation(fields: [userId], references: [id])
+}

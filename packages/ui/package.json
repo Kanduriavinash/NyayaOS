@@ -1,0 +1,15 @@
+{
+    "version":  "1.0.0",
+    "dependencies":  {
+
+                     },
+    "types":  "./dist/index.d.ts",
+    "type":  "module",
+    "name":  "@nyayaos/ui",
+    "private":  true,
+    "scripts":  {
+                    "dev":  "tsc -w",
+                    "build":  "tsc"
+                },
+    "main":  "./dist/index.js"
+}

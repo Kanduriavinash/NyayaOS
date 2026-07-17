@@ -1,0 +1,152 @@
+=========================================================================
+NYAYAOS - MCP SERVERS OVERVIEW & CONFIGURATION
+=========================================================================
+
+This file contains the profiles, ports, tools, resources, and configuration
+details for the 8 Model Context Protocol (MCP) servers built using NitroStack.
+
+Database backend: SQLite (dev.db in packages/database/prisma/dev.db)
+
+-------------------------------------------------------------------------
+1. Identity Server
+-------------------------------------------------------------------------
+* Folder: mcp/identity-server
+* Port: 4001
+* Description: Handles citizen identity verification and OTP validation.
+* Tools:
+  - verify_identity:
+    * Description: Verify citizen identity using their ID document type/number.
+    * Arguments: citizenId (String), idType ("aadhaar"|"passport"|"pan"|"voter_id"), idNumber (String)
+  - otp_verification:
+    * Description: Verify citizen identity via mobile/email OTP validation code.
+    * Arguments: phoneOrEmail (String), otpCode (String)
+* Resources:
+  - app://identity-rules: Guidelines and document formats for identity verification.
+* Prompts:
+  - explain_verification_process: Explains to the citizen why verification is needed.
+
+-------------------------------------------------------------------------
+2. Document Server
+-------------------------------------------------------------------------
+* Folder: mcp/document-server
+* Port: 4002
+* Description: Manages OCR text extraction, signature checking, and completeness verification.
+* Tools:
+  - ocr:
+    * Description: Perform OCR on uploaded PDF/image to extract text content.
+    * Arguments: file_name (String), file_type (String), file_content (Base64 string), caseId (String, optional)
+  - signature_detection:
+    * Description: Verify if a document contains valid signatures.
+    * Arguments: file_name (String), file_content (Base64 string)
+  - missing_page_detection:
+    * Description: Examine document to see if pages are missing or out of order.
+    * Arguments: file_name (String), file_content (Base64 string)
+* Resources:
+  - app://filing-templates: Standard petition and lawsuit document templates.
+  - app://required-checklists: Required documents list based on case category.
+
+-------------------------------------------------------------------------
+3. Registry Server
+-------------------------------------------------------------------------
+* Folder: mcp/registry-server
+* Port: 4003
+* Description: Handles validation of case filings, jurisdiction checks, and court fee calculations.
+* Tools:
+  - filing_validation:
+    * Description: Validates if a case contains all required data and documents, then approves/rejects the filing.
+    * Arguments: caseId (String)
+  - court_fee_calculation:
+    * Description: Calculate the filing court fee based on case category and claim value.
+    * Arguments: category (String), claimAmount (Number)
+  - jurisdiction_check:
+    * Description: Check if court has territorial jurisdiction over property location or ZIP code.
+    * Arguments: courtId (String), zipCode (String)
+
+-------------------------------------------------------------------------
+4. Research Server
+-------------------------------------------------------------------------
+* Folder: mcp/research-server
+* Port: 4004
+* Description: Searches statutes, judgments, and retrieves relevant case precedents.
+* Tools:
+  - search_statutes:
+    * Description: Search for relevant legal acts, codes, and sections.
+    * Arguments: query (String)
+  - search_judgments:
+    * Description: Search for public judicial judgments and opinions.
+    * Arguments: query (String)
+  - find_precedents:
+    * Description: Find similar case precedents with facts comparable to the ongoing lawsuit.
+    * Arguments: category (String), factsSummary (String)
+* Resources:
+  - app://acts-catalogue: List of civil/consumer laws and governing acts.
+
+-------------------------------------------------------------------------
+5. Scheduling Server
+-------------------------------------------------------------------------
+* Folder: mcp/scheduling-server
+* Port: 4005
+* Description: Allocates hearing rooms and dates, assigns judges, and fetches calendar feeds.
+* Tools:
+  - hearing_allocation:
+    * Description: Allocate courtroom, date, and assign a judge to a case.
+    * Arguments: caseId (String), courtId (String), daysOffset (Number)
+  - court_availability:
+    * Description: List scheduled hearings for a court room to verify availability.
+    * Arguments: courtId (String), date (String - YYYY-MM-DD)
+  - calendar_management:
+    * Description: Fetch calendar items (hearings list) for a user ID.
+    * Arguments: userId (String)
+
+-------------------------------------------------------------------------
+6. Notification Server
+-------------------------------------------------------------------------
+* Folder: mcp/notification-server
+* Port: 4006
+* Description: Dispatches case alerts via Email, SMS, and Push notifications.
+* Tools:
+  - send_email:
+    * Description: Send email notifications regarding case updates or court hearings.
+    * Arguments: userId (String), subject (String), body (String)
+  - send_sms:
+    * Description: Send text alerts to a user's mobile number.
+    * Arguments: userId (String), messageText (String)
+  - push_notification:
+    * Description: Trigger a web portal push notification alert.
+    * Arguments: userId (String), title (String), content (String)
+
+-------------------------------------------------------------------------
+7. Analytics Server
+-------------------------------------------------------------------------
+* Folder: mcp/analytics-server
+* Port: 4007
+* Description: Generates statistics on case loads, rejection rates, and judge workloads.
+* Tools:
+  - get_dashboard_analytics:
+    * Description: Fetch case counts, pending/disposed counts, rejection rates, and judge workloads.
+    * Arguments: None (Empty object)
+
+-------------------------------------------------------------------------
+8. Knowledge Server
+-------------------------------------------------------------------------
+* Folder: mcp/knowledge-server
+* Port: 4008
+* Description: Serves legal guides, court rules, and acts details.
+* Tools:
+  - fetch_acts:
+    * Description: Fetch legal text details for a specific act by ID.
+    * Arguments: actId (String)
+  - fetch_court_rules:
+    * Description: Retrieve general court procedural rules and conduct guidelines.
+    * Arguments: None (Empty object)
+* Resources:
+  - app://knowledge-guides: Detailed guidelines on plaint writing and formatting.
+
+=========================================================================
+HOW TO CONNECT TO NITROSTUDIO
+=========================================================================
+1. Open NitroStudio.
+2. Click 'Add Server' -> Select 'Nitro Project' tab.
+3. Browse to the specific server folder (e.g. mcp/identity-server).
+4. Click 'Open Project' -> Choose 'Studio App Canvas'.
+=========================================================================

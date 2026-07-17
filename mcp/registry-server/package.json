@@ -1,0 +1,26 @@
+{
+  "name": "@nyayaos/registry-server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "dev": "nitrostack-cli dev --port 4003",
+    "build": "nitrostack-cli build",
+    "start": "npm run build && nitrostack-cli start --port 4003",
+    "start:prod": "nitrostack-cli start --port 4003"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "@nitrostack/core": "^1",
+    "zod": "^3.22.4",
+    "@modelcontextprotocol/ext-apps": ">=0.1.0",
+    "@nyayaos/database": "file:../../packages/database"
+  },
+  "devDependencies": {
+    "@nitrostack/cli": "^1",
+    "@types/node": "^22.10.0",
+    "typescript": "^5.3.3"
+  }
+}

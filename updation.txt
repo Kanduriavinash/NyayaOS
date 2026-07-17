@@ -1,0 +1,49 @@
+=========================================================================
+NyayaOS - Workspace Scaffolding Update Log
+Created: 2026-07-17
+=========================================================================
+
+This file tracks the initial setup and updates of the NyayaOS multi-agent monorepo.
+
+-------------------------------------------------------------------------
+1. Root Configurations Scaffolded
+-------------------------------------------------------------------------
+* pnpm-workspace.yaml: Defines standard workspace directories (apps/*, packages/*, orchestration/*, agents/*, mcp/*, services/*, rag/*).
+* package.json: Configures monorepo tasks using Turborepo (build, dev, lint, format, database tools).
+* tsconfig.json: Declares shared ESNext/NodeNext compilation settings, enabling decorator metadata for NitroStack.
+* turbo.json: Sets caching rules and dependency order for building, formatting, and DB tasks.
+* .env.example: Lists connection strings and keys for Postgres, Redis, Qdrant, OpenAI, and service port ranges.
+* docker-compose.yml: Runs Postgres, Redis, and Qdrant containers.
+
+-------------------------------------------------------------------------
+2. Directory Structure Created
+-------------------------------------------------------------------------
+All workspace folders generated:
+* apps/ (citizen-portal, lawyer-dashboard, judge-dashboard, registry-dashboard, admin-dashboard)
+* packages/ (ui, database, shared, auth, ai, logger, events, types)
+* orchestration/ (planner, memory, workflow, graph, confidence, explainability, state)
+* agents/ (intake-agent, planner-agent, identity-agent, document-agent, registry-agent, research-agent, scheduling-agent, notification-agent, judge-agent, analytics-agent, mediation-agent)
+* mcp/ (identity-server, document-server, registry-server, research-server, scheduling-server, notification-server, analytics-server, knowledge-server)
+* services/ (auth-service, upload-service, pdf-service, ocr-service, mail-service, search-service, audit-service)
+* database/ (prisma, migrations, seed)
+* workflows/ (property-dispute, consumer-case, family-case, criminal-support, mediation)
+* rag/ (embeddings, ingestion, retriever, reranker, vector-db)
+* knowledge/ (acts, precedents, judgments, court-rules, templates)
+* prompts/, resources/, docs/, tests/, scripts/
+
+-------------------------------------------------------------------------
+3. Package Boilerplates Initialized
+-------------------------------------------------------------------------
+* All subfolders inside packages/, mcp/, agents/, services/, orchestration/, and rag/ are equipped with:
+  - tsconfig.json (extending the root tsconfig)
+  - package.json (declaring @nyayaos/ namespace package, type: module, and build commands)
+  - src/index.ts (empty index file entrypoint)
+
+-------------------------------------------------------------------------
+4. Frontend Dashboard Applications Scaffolding
+-------------------------------------------------------------------------
+* The 5 dashboard apps inside apps/ initialized as Next.js 15 projects with:
+  - Tailwind CSS + PostCSS configuration
+  - App Router structure (src/app/layout.tsx, src/app/page.tsx, globals.css)
+  - Dedicated next.config.ts and tsconfig.json extending the root config.
+  - Custom brand naming for portals.
