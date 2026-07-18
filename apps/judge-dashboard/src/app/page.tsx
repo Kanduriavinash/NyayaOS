@@ -23,7 +23,7 @@ interface CaseDoc {
 
 interface CaseHearing {
   id: string;
-  date: string;
+  date: Date | string;
   room: string;
   status: string;
 }
@@ -32,7 +32,7 @@ interface CaseOrder {
   id: string;
   title: string;
   content: string;
-  createdAt: string;
+  createdAt: Date | string;
 }
 
 interface Case {

@@ -81,8 +81,7 @@ export async function issueCourtOrder(data: {
       caseId: data.caseId,
       judgeId: data.judgeId,
       title: data.title,
-      content: data.content,
-      status: 'ACTIVE'
+      content: data.content
     }
   });
 

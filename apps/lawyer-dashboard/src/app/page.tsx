@@ -351,7 +351,6 @@ export default function LawyerDashboard() {
                         {research.precedents.map((p, idx) => (
                           <div key={idx} className="bg-slate-950 p-3 border border-slate-850 rounded-lg">
                             <span className="text-xs font-semibold text-indigo-300">{p.citation}</span>
-                            <p className="text-[10px] text-slate-500 mt-0.5 italic">{p.caseName}</p>
                             <p className="text-[11px] text-slate-400 mt-1">{p.summary}</p>
                           </div>
                         ))}

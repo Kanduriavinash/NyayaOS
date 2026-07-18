@@ -10,6 +10,13 @@ import { IdentityModule } from './modules/identity/identity.module.js';
   logging: {
     level: 'info'
   }
+  ,
+  transport: {
+    type: 'dual',
+    http: {
+      port: 4001
+    }
+  }
 })
 @Module({
   name: 'app',

@@ -10,6 +10,13 @@ import { NotificationModule } from './modules/notification/notification.module.j
   logging: {
     level: 'info'
   }
+  ,
+  transport: {
+    type: 'dual',
+    http: {
+      port: 4006
+    }
+  }
 })
 @Module({
   name: 'app',

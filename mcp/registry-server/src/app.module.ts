@@ -10,6 +10,13 @@ import { RegistryModule } from './modules/registry/registry.module.js';
   logging: {
     level: 'info'
   }
+  ,
+  transport: {
+    type: 'dual',
+    http: {
+      port: 4003
+    }
+  }
 })
 @Module({
   name: 'app',

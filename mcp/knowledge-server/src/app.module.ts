@@ -10,6 +10,13 @@ import { KnowledgeModule } from './modules/knowledge/knowledge.module.js';
   logging: {
     level: 'info'
   }
+  ,
+  transport: {
+    type: 'dual',
+    http: {
+      port: 4008
+    }
+  }
 })
 @Module({
   name: 'app',

@@ -10,6 +10,13 @@ import { AnalyticsModule } from './modules/analytics/analytics.module.js';
   logging: {
     level: 'info'
   }
+  ,
+  transport: {
+    type: 'dual',
+    http: {
+      port: 4007
+    }
+  }
 })
 @Module({
   name: 'app',

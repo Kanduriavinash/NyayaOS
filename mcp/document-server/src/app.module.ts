@@ -10,6 +10,13 @@ import { DocumentModule } from './modules/document/document.module.js';
   logging: {
     level: 'info'
   }
+  ,
+  transport: {
+    type: 'dual',
+    http: {
+      port: 4002
+    }
+  }
 })
 @Module({
   name: 'app',

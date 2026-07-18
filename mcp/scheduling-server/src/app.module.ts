@@ -10,6 +10,13 @@ import { SchedulingModule } from './modules/scheduling/scheduling.module.js';
   logging: {
     level: 'info'
   }
+  ,
+  transport: {
+    type: 'dual',
+    http: {
+      port: 4005
+    }
+  }
 })
 @Module({
   name: 'app',
