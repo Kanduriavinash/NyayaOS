@@ -16,7 +16,7 @@
     "@nitrostack/core": "^1",
     "zod": "^3.22.4",
     "@modelcontextprotocol/ext-apps": ">=0.1.0",
-    "@nyayaos/database": "file:../../packages/database"
+    "@nyayaos/database": "workspace:*"
   },
   "devDependencies": {
     "@nitrostack/cli": "^1",
