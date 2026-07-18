@@ -8,8 +8,8 @@
   "scripts": {
     "dev": "nitrostack-cli dev --port 4006",
     "build": "nitrostack-cli build",
-    "start": "npm run build && nitrostack-cli start --port 4006",
-    "start:prod": "nitrostack-cli start --port 4006"
+    "start": "npm run build && node ./start.js",
+    "start:prod": "node ./start.js"
   },
   "dependencies": {
     "dotenv": "^16.3.1",
