@@ -5,7 +5,7 @@
   "packageManager": "pnpm@10.27.0",
   "description": "NyayaOS – The Agentic Operating System for the Justice Ecosystem",
   "scripts": {
-    "build": "turbo run build",
+    "build": "node scripts/build.js",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,js,json,md}\"",
