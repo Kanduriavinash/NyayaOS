@@ -5,6 +5,7 @@
   "packageManager": "pnpm@10.27.0",
   "description": "NyayaOS – The Agentic Operating System for the Justice Ecosystem",
   "scripts": {
+    "start": "npm run start --prefix mcp/notification-server",
     "build": "node scripts/build.js",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
