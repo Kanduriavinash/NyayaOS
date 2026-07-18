@@ -32,7 +32,7 @@ if (isNpm) {
 
 console.log('[Build Script] Running turbo build...');
 try {
-  execSync('npx turbo run build', { stdio: 'inherit' });
+  execSync('npx turbo run build --concurrency=1', { stdio: 'inherit' });
 } catch (buildError) {
   console.error('[Build Script] Turbo build failed:', buildError.message);
   process.exit(1);
