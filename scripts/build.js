@@ -30,6 +30,14 @@ if (isNpm) {
   }
 }
 
+console.log('[Build Script] Generating Prisma Client...');
+try {
+  execSync('pnpm --filter @nyayaos/database db:generate', { stdio: 'inherit' });
+} catch (generateError) {
+  console.error('[Build Script] Prisma generate failed:', generateError.message);
+  process.exit(1);
+}
+
 console.log('[Build Script] Running turbo build...');
 try {
   execSync('npx turbo run build --concurrency=1', { stdio: 'inherit' });
